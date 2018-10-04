@@ -1,0 +1,42 @@
+{
+  "name": "ugd10a",
+  "version": "0.0.1",
+  "description": "Collection of time, object and data utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register ./src/**/*.test.ts",
+    "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register src/**/*.test.ts && nyc report",
+    "prepare-build": "npm run test && rimraf dist && tsc && copy README.md dist",
+    "publish-dev": "npm run prepare-build && copy package.json dist && npm publish dist --tag dev",
+    "publish-patch": "npm run prepare-build && npm version patch && copy package.json dist && npm publish dist",
+    "publish-minor": "npm run prepare-build && npm version minor && copy package.json dist && npm publish dist",
+    "publish-major": "npm run prepare-build && npm version major && copy package.json dist && npm publish dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janis-r/ugd10a.git"
+  },
+  "keywords": [
+    "data collection",
+    "data caching",
+    "typescript",
+    "javascript",
+    "node"
+  ],
+  "author": "Jānis Radiņš",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janis-r/ugd10a/issues"
+  },
+  "homepage": "https://github.com/janis-r/ugd10a#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "rimraf": "^2.6.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.1"
+  }
+}

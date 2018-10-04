@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+     "lib": [
+       "es2015",
+       "dom"
+     ],
+     "declaration": true,
+     "sourceMap": false,
+     "outDir": "./dist",
+     "removeComments": false,
+     "strict": true,
+     "noImplicitAny": true,
+     "strictFunctionTypes": true,
+     "alwaysStrict": true,
+     "noUnusedLocals": true,
+     "noUnusedParameters": true,
+     "noImplicitReturns": true
+  },
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
+}
