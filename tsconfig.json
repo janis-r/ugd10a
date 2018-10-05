@@ -18,6 +18,7 @@
      "noImplicitReturns": true
   },
   "exclude": [
-    "src/**/*.test.ts"
+    "src/**/*.test.ts",
+    "export-package.ts"
   ]
 }
