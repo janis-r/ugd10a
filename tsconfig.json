@@ -8,7 +8,7 @@
      ],
      "declaration": true,
      "sourceMap": false,
-     "outDir": "./dist",
+     "outDir": "./dist/dist",
      "removeComments": false,
      "strict": true,
      "noImplicitAny": true,

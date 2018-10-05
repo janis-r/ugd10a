@@ -2,7 +2,7 @@
   "name": "ugd10a",
   "version": "0.0.4",
   "description": "Collection of time, object and data utilities",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register ./src/**/*.test.ts",
     "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register src/**/*.test.ts && nyc report",
