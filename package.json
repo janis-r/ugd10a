@@ -1,6 +1,6 @@
 {
   "name": "ugd10a",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Collection of time, object and data utilities",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/esnext/index.js",
@@ -8,12 +8,12 @@
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register src/**/*.test.ts && nyc report",
-    "transpile"       : "tsc && tsc -p . --outDir build/dist/esnext --module es2015 --target esnext",
-    "prepare-build"   : "npm run test && rimraf build && npm run transpile && copy README.md build",
+    "transpile": "tsc && tsc -p . --outDir build/dist/esnext --module es2015 --target esnext",
+    "prepare-build": "npm run test && rimraf build && npm run transpile && copy README.md build",
     "publish-prepatch": "npm run prepare-build && npm version prepatch && ts-node export-package && npm publish build --tag dev",
-    "publish-patch"   : "npm run prepare-build && npm version patch    && ts-node export-package && npm publish build",
-    "publish-minor"   : "npm run prepare-build && npm version minor    && ts-node export-package && npm publish build",
-    "publish-major"   : "npm run prepare-build && npm version major    && ts-node export-package && npm publish build"
+    "publish-patch": "npm run prepare-build && npm version patch    && ts-node export-package && npm publish build",
+    "publish-minor": "npm run prepare-build && npm version minor    && ts-node export-package && npm publish build",
+    "publish-major": "npm run prepare-build && npm version major    && ts-node export-package && npm publish build"
   },
   "repository": {
     "type": "git",
