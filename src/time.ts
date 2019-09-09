@@ -8,7 +8,7 @@ export class Timer {
      * @returns {number}
      */
     static get now(): number {
-        return new Date().getTime();
+        return Date.now();
     }
 
     private start = Timer.now;
