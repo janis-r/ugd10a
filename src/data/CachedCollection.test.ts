@@ -18,11 +18,35 @@ describe("CachedCollection", () => {
 
     it("Will provide value returned by update function", async () => {
         const collection = new CachedCollection(fetchFunction, 1);
-
         const inputs = new Set([1, 2, 3]);
         const outputs = await collection.getData(inputs);
-
         inputs.forEach(i => expect(outputs.get(i)).to.equal(i.toString()));
+    });
+
+    it("Will fetch only new values", async () => {
+        const requestSizeReport: number[] = [];
+        const localFetchFun = async (setOfI: Set<number>) => {
+            requestSizeReport.push(setOfI.size);
+            return fetchFunction(setOfI);
+        };
+
+        const requests = [
+            [1, 2, 3],
+            [4, 5],
+            [1, 2, 3, 4, 5, 6],
+        ];
+
+        const collection = new CachedCollection(localFetchFun, 10);
+        for (const request of requests) {
+            await collection.getData(new Set(request));
+        }
+
+        const itemIdTrack = new Set<number>();
+        requests.forEach((request, index) => {
+            const uniqueItemCount = request.filter(i => !itemIdTrack.has(i)).length;
+            expect(uniqueItemCount).to.equal(requestSizeReport[index]);
+            request.forEach(v => itemIdTrack.add(v));
+        });
     });
 
     it("Collection size is reported correctly", async () => {

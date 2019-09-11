@@ -56,7 +56,7 @@ export class CachedCollection<I, O> {
         if (entriesToFetch.size > 0) {
             const fetchCall = async () => {
                 const dataPromise = new Promise<void>(async resolve => {
-                    const newEntries = await fetchFunction(itemIds);
+                    const newEntries = await fetchFunction(entriesToFetch);
                     const {now: lastAccess} = Timer;
                     for (const [input, data] of newEntries) {
                         dataCache.set(input, {data, lastAccess});
