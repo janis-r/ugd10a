@@ -1,4 +1,5 @@
 import {Timer} from "../time";
+import {uniqueValues} from "../object";
 
 /**
  * Cached data collection that'll provide a set of cached values of same type.
@@ -27,6 +28,10 @@ export class CachedCollection<I, O> {
         }
     }
 
+    /**
+     * Get collection data
+     * @param itemIds
+     */
     async getData(itemIds: Set<I>): Promise<Map<I, O>> {
         const {inputTypeGuard, dataCache, dataFetchesInProgress, fetchFunction} = this;
 
@@ -87,7 +92,17 @@ export class CachedCollection<I, O> {
     }
 
     /**
+     * Delete items from collection
+     * @param itemsIds
+     * @return number of entries successfully deleted
+     */
+    delete(...itemsIds: I[]): number {
+        return uniqueValues(itemsIds).map(id => this.dataCache.delete(id)).filter(state => state).length;
+    }
+
+    /**
      * Clear all overdue entries.
+     * @return number of purged entries
      */
     purge(): number {
         const {dataCache, ttl} = this;

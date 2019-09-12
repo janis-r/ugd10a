@@ -84,4 +84,16 @@ describe("CachedCollection", () => {
         }
         expect(errorEncountered).to.equal(true);
     });
+
+    it("Can delete entries", async () => {
+        const collection = new CachedCollection(fetchFunction, 10);
+        const inputs = new Set([1, 2, 3, 4, 5, 6]);
+        await collection.getData(inputs);
+        expect(collection.size).to.equal(inputs.size);
+
+        const deleteCount = 3;
+        const report = collection.delete(...[...inputs].slice(0, deleteCount));
+        expect(report).to.equal(deleteCount);
+        expect(collection.size).to.equal(inputs.size - deleteCount);
+    });
 });
