@@ -2,35 +2,30 @@
  * Transform date object into Map object representing Date object components
  * @param time
  */
-export const timeToMap = (time: Date) => {
-    const keys = [TimePart.Date, TimePart.Month, TimePart.Year, TimePart.Hours, TimePart.Minutes, TimePart.Seconds, TimePart.Epoch];
-    const values = [
-        time.getDate(),
-        time.getMonth() + 1,
-        time.getFullYear(),
-        time.getHours(),
-        time.getMinutes(),
-        time.getSeconds(),
-        time.getTime()
+export const timeToObject = (time: Date): TimeMap & { toMap: () => Map<TimePart, number> } => {
+    const values: [TimePart, number][] = [
+        [TimePart.Date, time.getDate()],
+        [TimePart.Month, time.getMonth() + 1],
+        [TimePart.Year, time.getFullYear()],
+        [TimePart.Hours, time.getHours()],
+        [TimePart.Minutes, time.getMinutes()],
+        [TimePart.Seconds, time.getSeconds()],
+        [TimePart.Epoch, time.getTime()]
     ];
 
-    return new (class ExtendedMap extends Map<TimePart, number> {
-        /**
-         * Get time object representation as an object
-         */
-        asObject(): TimeMap {
-            const data: Partial<TimeMap> = {};
-            [...this].forEach(([key, value]) => data[key] = value);
-            return data as TimeMap;
-        }
-    })(keys.map((key, index): [TimePart, number] => ([key, values[index]])))
+    const timeMap: Partial<TimeMap> = {};
+    values.forEach(([key, value]) => timeMap[key] = value);
+    return {
+        ...timeMap as TimeMap,
+        toMap: () => new Map(values)
+    };
 };
 
 /**
  * Transform date object into Map object representing Date object components
  * @param time
  */
-export const timeToObject = (time: Date) => timeToMap(time).asObject();
+export const timeToMap = (time: Date): Map<TimePart, number> => timeToObject(time).toMap();
 
 /**
  * Get current time as map
