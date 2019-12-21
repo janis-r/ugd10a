@@ -9,9 +9,9 @@
     "test": "jest --colors --runInBand",
     "transpile": "tsc && tsc -p . --outDir build/dist/esnext --module es2015 --target esnext",
     "prepare-build": "npm run test && rimraf build && npm run transpile && copy README.md build",
-    "publish-patch": "npm run prepare-build && npm version patch    && ts-node export-package && npm publish build",
-    "publish-minor": "npm run prepare-build && npm version minor    && ts-node export-package && npm publish build",
-    "publish-major": "npm run prepare-build && npm version major    && ts-node export-package && npm publish build"
+    "publish-patch": "npm run prepare-build && npm version patch && ts-node export-package && npm publish build",
+    "publish-minor": "npm run prepare-build && npm version minor && ts-node export-package && npm publish build",
+    "publish-major": "npm run prepare-build && npm version major && ts-node export-package && npm publish build"
   },
   "repository": {
     "type": "git",
@@ -32,8 +32,7 @@
   "homepage": "https://github.com/janis-r/ugd10a#readme",
   "devDependencies": {
     "@types/jest": "^24.0.24",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.4",
+    "@types/node": "^10.17.11",
     "jest": "^24.9.0",
     "rimraf": "^2.6.2",
     "ts-jest": "^24.2.0",

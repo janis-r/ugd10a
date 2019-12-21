@@ -23,8 +23,8 @@ describe("Timer utility", () => {
 
         const elapsedValue = timer.elapsed;
         const resetValue = timer.reset();
-        expect(elapsedValue).toBe(resetValue);
         expect(timer.elapsed).toBe(0);
+        expect(elapsedValue).toBe(resetValue);
     });
 });
 
