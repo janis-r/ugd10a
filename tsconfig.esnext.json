@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "downlevelIteration": true,
-    "module": "commonjs",
+    "module": "esnext",
      "lib": [
        "es2015",
        "dom"
      ],
      "declaration": true,
-     "sourceMap": false,
-     "outDir": "build/dist/es5",
+     "sourceMap": true,
+     "outDir": "build/dist/esnext",
      "removeComments": false,
      "strict": true,
      "noImplicitAny": true,
      "strictFunctionTypes": true,
      "alwaysStrict": true,
      "noUnusedLocals": true,
-     "noImplicitReturns": true
+     "noImplicitReturns": true,
+     "moduleResolution": "node"
   },
   "exclude": [
     "./src/**/*.spec.ts",
