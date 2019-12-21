@@ -1,4 +1,3 @@
-import {expect} from "chai";
 import {TimePart, timeToMap, timeToObject} from "./time-map";
 
 describe("Time mapping", () => {
@@ -13,12 +12,12 @@ describe("Time mapping", () => {
 
         const parsed = timeToObject(new Date(`${year}-${month}-${date}T${hours}:${minutes}:${seconds}`));
 
-        expect(parsed.date).to.equal(date);
-        expect(parsed.month).to.equal(month);
-        expect(parsed.year).to.equal(year);
-        expect(parsed.hours).to.equal(hours);
-        expect(parsed.minutes).to.equal(minutes);
-        expect(parsed.seconds).to.equal(seconds);
+        expect(parsed.date).toBe(date);
+        expect(parsed.month).toBe(month);
+        expect(parsed.year).toBe(year);
+        expect(parsed.hours).toBe(hours);
+        expect(parsed.minutes).toBe(minutes);
+        expect(parsed.seconds).toBe(seconds);
     });
 
     it("Time to map is parsed correctly", () => {
@@ -31,12 +30,12 @@ describe("Time mapping", () => {
 
         const parsed = timeToMap(new Date(`${year}-${month}-${date}T${hours}:${minutes}:${seconds}`));
 
-        expect(parsed.get(TimePart.Date)).to.equal(date);
-        expect(parsed.get(TimePart.Month)).to.equal(month);
-        expect(parsed.get(TimePart.Year)).to.equal(year);
-        expect(parsed.get(TimePart.Hours)).to.equal(hours);
-        expect(parsed.get(TimePart.Minutes)).to.equal(minutes);
-        expect(parsed.get(TimePart.Seconds)).to.equal(seconds);
+        expect(parsed.get(TimePart.Date)).toBe(date);
+        expect(parsed.get(TimePart.Month)).toBe(month);
+        expect(parsed.get(TimePart.Year)).toBe(year);
+        expect(parsed.get(TimePart.Hours)).toBe(hours);
+        expect(parsed.get(TimePart.Minutes)).toBe(minutes);
+        expect(parsed.get(TimePart.Seconds)).toBe(seconds);
     });
 
 });

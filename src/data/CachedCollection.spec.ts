@@ -1,4 +1,3 @@
-import {expect} from "chai";
 import {CachedCollection} from "./CachedCollection";
 
 const fetchFunction = async (setOfI: Set<number>) => new Map([...setOfI].map((i): [number, string] => ([i, i.toString()])));
@@ -6,21 +5,21 @@ const fetchFunction = async (setOfI: Set<number>) => new Map([...setOfI].map((i)
 describe("CachedCollection", () => {
 
     it("Will check if fetch function is provided", () => {
-        expect(() => new CachedCollection(null as any, 1)).to.throw(Error);
-        expect(() => new CachedCollection(fetchFunction, 1)).not.to.throw(Error);
+        expect(() => new CachedCollection(null as any, 1)).toThrowError();
+        expect(() => new CachedCollection(fetchFunction, 1)).not.toThrowError();
     });
 
     it("Will check if valid TTL is provided", () => {
-        expect(() => new CachedCollection(fetchFunction, -1)).to.throw(Error);
-        expect(() => new CachedCollection(fetchFunction, 0)).to.throw(Error);
-        expect(() => new CachedCollection(fetchFunction, 1)).not.to.throw(Error);
+        expect(() => new CachedCollection(fetchFunction, -1)).toThrowError();
+        expect(() => new CachedCollection(fetchFunction, 0)).toThrowError();
+        expect(() => new CachedCollection(fetchFunction, 1)).not.toThrowError();
     });
 
     it("Will provide value returned by update function", async () => {
         const collection = new CachedCollection(fetchFunction, 1);
         const inputs = new Set([1, 2, 3]);
         const outputs = await collection.getData(inputs);
-        inputs.forEach(i => expect(outputs.get(i)).to.equal(i.toString()));
+        inputs.forEach(i => expect(outputs.get(i)).toBe(i.toString()));
     });
 
     it("Will fetch only new values", async () => {
@@ -44,7 +43,7 @@ describe("CachedCollection", () => {
         const itemIdTrack = new Set<number>();
         requests.forEach((request, index) => {
             const uniqueItemCount = request.filter(i => !itemIdTrack.has(i)).length;
-            expect(uniqueItemCount).to.equal(requestSizeReport[index]);
+            expect(uniqueItemCount).toBe(requestSizeReport[index]);
             request.forEach(v => itemIdTrack.add(v));
         });
     });
@@ -53,19 +52,19 @@ describe("CachedCollection", () => {
         const collection = new CachedCollection(fetchFunction, 1);
         const inputs = new Set([1, 2, 3]);
         const dataPromise = collection.getData(inputs);
-        expect(collection.size).to.equal(0);
-        expect(collection.entriesInProgress).to.equal(inputs.size);
+        expect(collection.size).toBe(0);
+        expect(collection.entriesInProgress).toBe(inputs.size);
         await dataPromise;
-        expect(collection.size).to.equal(inputs.size);
+        expect(collection.size).toBe(inputs.size);
     });
 
     it("Collection is cleaned up within value provided for TTL", async () => {
         const collection = new CachedCollection(fetchFunction, 1);
         const inputs = new Set([1, 2, 3]);
         await collection.getData(inputs);
-        expect(collection.size).to.equal(inputs.size);
+        expect(collection.size).toBe(inputs.size);
         await new Promise(resolve => setTimeout(resolve, 20));
-        expect(collection.size).to.equal(0);
+        expect(collection.size).toBe(0);
     });
 
     it("Input type guard will notice invalid inputs", async () => {
@@ -82,18 +81,18 @@ describe("CachedCollection", () => {
         } catch (e) {
             errorEncountered = true;
         }
-        expect(errorEncountered).to.equal(true);
+        expect(errorEncountered).toBe(true);
     });
 
     it("Can delete entries", async () => {
         const collection = new CachedCollection(fetchFunction, 10);
         const inputs = new Set([1, 2, 3, 4, 5, 6]);
         await collection.getData(inputs);
-        expect(collection.size).to.equal(inputs.size);
+        expect(collection.size).toBe(inputs.size);
 
         const deleteCount = 3;
         const report = collection.delete(...[...inputs].slice(0, deleteCount));
-        expect(report).to.equal(deleteCount);
-        expect(collection.size).to.equal(inputs.size - deleteCount);
+        expect(report).toBe(deleteCount);
+        expect(collection.size).toBe(inputs.size - deleteCount);
     });
 });

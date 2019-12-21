@@ -30,7 +30,7 @@ export function valueBelongsToEnum<T>(object: T, value: any): value is T {
  * @param {{}} object
  * @returns {{}} Object passed in as argument with null values deleted
  */
-export function removeObjectNullValues<T>(object: T): T {
+export function removeObjectNullValues<T extends Object>(object: T): T {
     for (const i in object) {
         if (!object.hasOwnProperty(i)) {
             continue;
