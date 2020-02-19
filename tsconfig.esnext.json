@@ -10,7 +10,7 @@
      "declaration": true,
      "sourceMap": true,
      "outDir": "build/dist/esnext",
-     "removeComments": false,
+     "removeComments": true,
      "strict": true,
      "noImplicitAny": true,
      "strictFunctionTypes": true,
