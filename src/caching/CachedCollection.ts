@@ -1,5 +1,5 @@
-import {Timer} from "../time";
-import {uniqueValues} from "../object";
+import {Timer} from "../time/Timer";
+import {uniqueValues} from "../object/object-utils";
 
 /**
  * Cached data collection that'll provide a set of cached values of same type.

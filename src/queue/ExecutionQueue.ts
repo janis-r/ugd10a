@@ -1,7 +1,13 @@
+/**
+ * Enqueue list of actions and execute them in linear manner
+ */
 export class ExecutionQueue {
 
     private readonly queue = new Array<EnqueuedAction<any>>();
-
+    /**
+     * Add action to queue
+     * @param action
+     */
     readonly enqueue = async <T>(action: Action<T>) => new Promise<ReturnType<Action<T>>>((resolve, reject) => {
         const {queue} = this;
         queue.push(

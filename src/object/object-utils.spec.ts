@@ -1,4 +1,4 @@
-import {findObjectKeyForValue, removeObjectNullValues, uniqueValues, valueBelongsToEnum} from "./object";
+import {findObjectKeyForValue, removeObjectNullValues, uniqueValues, valueBelongsToEnum} from "./object-utils";
 
 describe("Object utils", () => {
     it("Can find object key name for value", () => {

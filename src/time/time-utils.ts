@@ -1,38 +1,4 @@
-/**
- * Timer utility class
- */
-export class Timer {
-
-    /**
-     * Get current epoch time
-     * @returns {number}
-     */
-    static get now(): number {
-        return Date.now();
-    }
-
-    private start = Timer.now;
-
-    /**
-     * Reset timer and get elapsed time
-     * @returns {number}
-     */
-    reset(): number {
-        const elapsed = this.elapsed;
-        this.start = Timer.now;
-        return elapsed
-    }
-
-    /**
-     * Get elapsed time
-     * @returns {number}
-     */
-    get elapsed(): number {
-        return Timer.now - this.start;
-    }
-}
-
-export type TimeUnit = "milliseconds" | "seconds" | "minutes" | "hours";
+export type TimeUnit = "milliseconds" | "seconds" | "minutes" | "hours" | "days";
 
 /**
  * Convert value provided in some defined time unit to milliseconds
@@ -45,9 +11,11 @@ export function toMilliseconds(value: number, unit: TimeUnit = "milliseconds"): 
         case "seconds" :
             return value * 1000;
         case "minutes" :
-            return value * 60 * 1000;
+            return value * 60000;
         case "hours" :
-            return value * 3600 * 1000;
+            return value * 3600000;
+        case "days":
+            return value * 86400000;
     }
     return value;
 }
@@ -66,6 +34,8 @@ export function toSeconds(value: number, unit: TimeUnit = "seconds"): number {
             return value * 60;
         case "hours" :
             return value * 3600;
+        case "days":
+            return value * 86400;
     }
     return value;
 }

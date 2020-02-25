@@ -1,4 +1,5 @@
-import {Timer} from "../time";
+import {Timer} from "../time/Timer";
+
 /**
  * Cached data instance - holds last known value and manages data updates.
  */
@@ -33,6 +34,7 @@ export class Cached<T> {
             throw new Error(`Cached instance error - ttl (${ttl}) is not usable`);
         }
     }
+
     /**
      * Det cached data or data promise
      * @returns {Promise<T>}

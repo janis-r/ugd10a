@@ -4,10 +4,9 @@
  * @param value Value to lookup
  * @returns {string | null}
  */
-export function findObjectKeyForValue(object: {[key:string]:any}, value: any): string | null {
+export function findObjectKeyForValue(object: Record<string, any>, value: any): string | null {
     const keys = Object.keys(object);
-    while (keys && keys.length > 0) {
-        const key = keys.shift()!;
+    for (const key of keys) {
         if (object.hasOwnProperty(key) && object[key] === value) {
             return key;
         }
@@ -21,7 +20,7 @@ export function findObjectKeyForValue(object: {[key:string]:any}, value: any): s
  * @param value
  * @returns {value is T}
  */
-export function valueBelongsToEnum<T>(object: T, value: any): value is T {
+export function valueBelongsToEnum<T extends Object>(object: T, value: any): value is T {
     return findObjectKeyForValue(object, value) !== null;
 }
 
