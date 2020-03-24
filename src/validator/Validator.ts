@@ -54,9 +54,9 @@ export class Validator<T extends Record<string | number, any>> {
      * @param allowExtraFields
      */
     extendFor<SubT extends T>(configuration: ValidatorConfig<SubT>, allowExtraFields = false) {
-        const baseConfig = this.configuration as ValidatorConfig<SubT>;
-        const extendedConfig = normalizeConfig(configuration);
-        return new Validator<SubT>([...baseConfig, ...extendedConfig], allowExtraFields);
+        const config = [...this.configuration] as Array<FieldConfiguration<SubT>>;
+        config.push(...normalizeConfig(configuration));
+        return new Validator<SubT>(config, allowExtraFields);
     };
 
     /**
