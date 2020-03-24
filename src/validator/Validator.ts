@@ -43,7 +43,7 @@ export class Validator<T extends Record<string | number, any>> {
         const {validateType, validateFieldList, validateValues} = this;
         this._lastError = null;
 
-        if (!validateType(value) || !validateFieldList(value) || validateValues(value)) {
+        if (!validateType(value) || !validateFieldList(value) || !validateValues(value)) {
             return false;
         }
         return true;
