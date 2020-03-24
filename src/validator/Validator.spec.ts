@@ -37,8 +37,8 @@ describe("Object validation", () => {
         expect(new Validator([]).validate(true)).toBe(false);
     });
     it("Allow extra fields is supported", () => {
-        expect(new Validator([], true).validate({a: 1})).toBe(true);
-        expect(new Validator([], false).validate({a: 1})).toBe(false);
+        expect(new Validator<{}>([], true).validate({a: 1})).toBe(true);
+        expect(new Validator<{}>([], false).validate({a: 1})).toBe(false);
     });
     it("Builtin value types are matched correctly", () => {
         for (const [type, property] of builtInTypeMap) {
