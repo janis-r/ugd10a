@@ -20,7 +20,7 @@ const builtInTypeMap = new Map<ValueType, any>([
  */
 const validateProperty = (property: any, ...validTypes: ValueType[]) => {
     for (const type of builtInTypeMap.keys()) {
-        const result = new Validator<{property: any}>([{field: "property", type: type}]).validate({property});
+        const result = new Validator<{ property: any }>([{field: "property", type: type}]).validate({property});
         if (validTypes.includes(type) && result === true) {
             continue;
         }
@@ -50,20 +50,23 @@ describe("Object validation", () => {
         expect(validateProperty([1, 2, 3], "string[]")).toBe(false);
     });
     it("Can match array of strings", () => {
-        const validator = new Validator<{property: string[]}>([{field: "property", type: "string[]"}]);
+        const validator = new Validator<{ property: string[] }>([{field: "property", type: "string[]"}]);
         expect(validator.validate({property: ["1", "2", "3"]})).toBe(true);
         expect(validator.validate({property: ["1", 2, "3"]})).toBe(false);
     });
     it("Can match array of numbers", () => {
-        const validator = new Validator<{property: number[]}>([{field: "property", type: "number[]"}]);
+        const validator = new Validator<{ property: number[] }>([{field: "property", type: "number[]"}]);
         expect(validator.validate({property: [1, 2, 3]})).toBe(true);
         expect(validator.validate({property: ["1", 2, "3"]})).toBe(false);
     });
     it("Can validate field value", () => {
-        expect(new Validator<{property: any}>([{field: "property", validator: v => v === 0}]).validate({property: 0})).toBe(true);
+        expect(new Validator<{ property: any }>([{
+            field: "property",
+            validator: v => v === 0
+        }]).validate({property: 0})).toBe(true);
     });
     it("Can detect empty value", () => {
-        const validator = new Validator<{property: any}>([{field: "property", notEmpty: true}]);
+        const validator = new Validator<{ property: any }>([{field: "property", notEmpty: true}]);
         expect(validator.validate({property: 0})).toBe(true);
         expect(validator.validate({property: false})).toBe(true);
         expect(validator.validate({property: []})).toBe(true);
@@ -71,13 +74,36 @@ describe("Object validation", () => {
         expect(validator.validate({property: undefined})).toBe(false);
     });
     it("Can validate array item value", () => {
-        const validator = new Validator<{property: any[]}>([{field: "property", type: "array", itemValidator: v => v > 0}]);
+        const validator = new Validator<{ property: any[] }>([{
+            field: "property",
+            type: "array",
+            itemValidator: v => v > 0
+        }]);
         expect(validator.validate({property: [1, 2, 3, 4, 5]})).toBe(true);
         expect(validator.validate({property: [1, 2, 0, 4, 5]})).toBe(false);
     });
     it("Can handle optional fields", () => {
-        const validator = new Validator<{property?: any}>([{field: "property", optional: true}]);
+        const validator = new Validator<{ property?: any }>([{field: "property", optional: true}]);
         expect(validator.validate({property: 1})).toBe(true);
         expect(validator.validate({})).toBe(true);
     });
+    it("Can extend validator", () => {
+        type A = { a: number, b: boolean };
+        const validator = new Validator<A>({
+            a: {type: "number"},
+            b: {type: "boolean"}
+        });
+        expect(validator.validate({a: 1, b: 1})).toBe(false);
+        expect(validator.validate({a: 1, b: true})).toBe(true);
+
+        type B = A & { c: number, d: boolean };
+        const subValidator = validator.extendFor<B>({
+            c: {type: "number"},
+            d: {type: "boolean"}
+        });
+
+        expect(subValidator.validate({a: 1, b: true, c: 1, d: 1})).toBe(false);
+        expect(subValidator.validate({a: 1, b: true, c: 1, d: true})).toBe(true);
+    });
+
 });

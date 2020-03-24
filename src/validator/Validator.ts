@@ -3,6 +3,10 @@ import {FieldConfiguration} from "./data/FieldConfiguration";
 import {ValueType} from "./data/ValueType";
 import {isArrayOfNumbers, isArrayOfStrings} from "./is-array-of";
 
+type ValidatorConfig<T> =
+    Array<FieldConfiguration<T>> |
+    { [Key in FieldConfiguration<T>["field"]]?: Omit<FieldConfiguration<T>, "field"> };
+
 /**
  * Object shape validator utility
  */
@@ -19,13 +23,8 @@ export class Validator<T extends Record<string | number, any>> {
      * entry represents single field or key/value map where key represents field name and value is its configuration.
      * @param allowExtraFields Defines if fields unlisted in configuration are permitted.
      */
-    constructor(configuration: Array<FieldConfiguration<T>> | Record<FieldConfiguration<T>["field"], Omit<FieldConfiguration<T>, "field">>,
-                readonly allowExtraFields = false) {
-        if (Array.isArray(configuration)) {
-            this.configuration = configuration;
-        } else {
-            this.configuration = Object.keys(configuration).map(field => ({...configuration[field], field}));
-        }
+    constructor(configuration: ValidatorConfig<T>, readonly allowExtraFields = false) {
+        this.configuration = normalizeConfig(configuration);
     }
 
     /**
@@ -47,6 +46,17 @@ export class Validator<T extends Record<string | number, any>> {
             return false;
         }
         return true;
+    };
+
+    /**
+     * Extend validator for sub type of T with extra configuration fields.
+     * @param configuration
+     * @param allowExtraFields
+     */
+    extendFor<SubT extends T>(configuration: ValidatorConfig<SubT>, allowExtraFields = false) {
+        const baseConfig = this.configuration as ValidatorConfig<SubT>;
+        const extendedConfig = normalizeConfig(configuration);
+        return new Validator<SubT>([...baseConfig, ...extendedConfig], allowExtraFields);
     };
 
     /**
@@ -231,4 +241,17 @@ export class Validator<T extends Record<string | number, any>> {
         }
         return true;
     }
+}
+
+/**
+ * Normalize validator config that can come in as array listing config for fields or as an object with key/value
+ * pairs as configuration definition, into uniform format of first variation type.
+ * @param configuration
+ */
+function normalizeConfig<T extends Record<string | number, any>>(configuration: ValidatorConfig<T>) {
+    if (Array.isArray(configuration)) {
+        return configuration;
+    }
+
+    return Object.keys(configuration).map(field => ({...configuration[field], field}));
 }
