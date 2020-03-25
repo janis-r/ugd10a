@@ -9,7 +9,7 @@
      ],
      "declaration": true,
      "sourceMap": true,
-     "outDir": "build/dist/esnext",
+     "outDir": "./build/.esnext",
      "removeComments": true,
      "strict": true,
      "noImplicitAny": true,

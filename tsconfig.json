@@ -9,7 +9,7 @@
      ],
      "declaration": true,
      "sourceMap": true,
-     "outDir": "build/dist/es5",
+     "outDir": "./build",
      "removeComments": true,
      "strict": true,
      "noImplicitAny": true,

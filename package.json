@@ -2,9 +2,9 @@
   "name": "ugd10a",
   "version": "0.6.3",
   "description": "Collection of time, object and data utilities",
-  "main": "dist/es5/index.js",
-  "jsnext:main": "dist/esnext/index.js",
-  "typings": "dist/es5/index.d.ts",
+  "main": "index.js",
+  "jsnext:main": ".esnext/index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "jest --colors --runInBand",
     "transpile": "tsc && tsc -p ./tsconfig.esnext.json",
