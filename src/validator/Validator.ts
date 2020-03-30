@@ -182,7 +182,7 @@ export class Validator<T extends Record<string | number, any>> {
             }
         }
 
-        if (notEmpty && value === undefined || (typeof value === "string" && !value.length)) {
+        if (notEmpty && (value === undefined || (typeof value === "string" && !value.length))) {
             this._lastError = {field, error: `String length mismatch - is empty. Value: ${value}`};
             return false;
         }
