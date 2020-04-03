@@ -9,6 +9,7 @@ type ValidatorConfig<T> =
 
 /**
  * Object shape validator utility
+ * @template T Type of data that is validated.
  */
 export class Validator<T extends Record<string | number, any>> {
 

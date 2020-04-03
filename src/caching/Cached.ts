@@ -2,6 +2,7 @@ import {Timer} from "../time/Timer";
 
 /**
  * Cached data instance - holds last known value and manages data updates.
+ * @template T Cached data type
  */
 export class Cached<T> {
 

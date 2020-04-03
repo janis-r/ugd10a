@@ -2,6 +2,7 @@ import {ValueType} from "./ValueType";
 
 /**
  * Object field validation configuration entry
+ * @template T Object type that is described within this configuration instance
  */
 export type FieldConfiguration<T extends Record<string | number, any> = any> = {
     // Field name within object to validate

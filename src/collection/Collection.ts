@@ -4,6 +4,7 @@ import {SubscriptionManager} from "./SubscriptionManager";
 
 /**
  * Data collection class that provide a list of data objects with functionality to track collection state.
+ * @template T Collection data type
  */
 export class Collection<T> {
 

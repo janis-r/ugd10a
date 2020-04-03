@@ -1,5 +1,6 @@
 /**
  * Subscription to manage changes in data Collection
+ * @template T Data type of a collection that initiated this event
  */
 export interface Subscription<T> {
 
@@ -57,6 +58,7 @@ export interface Subscription<T> {
 
 /**
  * Single data item change callback shape
+ * @template T Data type of a collection that initiated this event
  */
 export type ItemChangeCallback<T> = {
     /**
@@ -72,6 +74,7 @@ export type ItemChangeCallback<T> = {
 
 /**
  * Collection level data change callback shape
+ * @template T Data type of a collection that initiated this event
  */
 export type CollectionChangeCallback<T> = {
     /**

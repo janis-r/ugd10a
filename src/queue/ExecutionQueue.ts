@@ -6,6 +6,7 @@ export class ExecutionQueue {
     private readonly queue = new Array<EnqueuedAction<any>>();
     /**
      * Add action to queue
+     * @template T Return type of an action
      * @param action
      */
     readonly enqueue = async <T>(action: Action<T>) => new Promise<ReturnType<Action<T>>>((resolve, reject) => {
@@ -41,5 +42,12 @@ export class ExecutionQueue {
 
 }
 
+/**
+ * @template T Return type of an action
+ */
 type Action<T> = () => T | Promise<T>;
+
+/**
+ * @template T Return type of an action
+ */
 type EnqueuedAction<T> = () => Promise<ReturnType<Action<T>>>;

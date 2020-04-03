@@ -4,6 +4,7 @@ import {CollectionAction} from "./CollectionAction";
 
 /**
  * Data subscription manager
+ * @template T Data type of a collection subscription manager is attached to
  */
 export class SubscriptionManager<T> implements Subscription<T> {
 

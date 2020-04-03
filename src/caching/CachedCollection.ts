@@ -3,6 +3,8 @@ import {uniqueValues} from "../object/object-utils";
 
 /**
  * Cached data collection that'll provide a set of cached values of same type.
+ * @template I Cached data identifier type
+ * @template O Cached data value type
  */
 export class CachedCollection<I, O> {
 

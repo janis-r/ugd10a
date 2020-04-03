@@ -48,15 +48,16 @@ console.log(validator.lastError);
 
 - **exactValue**: Check entry for exact value.
 
-- **type**: String type - one of built in types: `undefined` | `object` | `boolean` | `number` | `bigint` | `string` | `symbol` | `function` 
-  Or any of custom array types : `array` | `string[]` | `number[]`  
+- **type**: String representing one of built in types: `undefined` | `object` | `boolean` | `number` | `bigint` |
+ `string` | `symbol` | `function` or any of custom, array types : `array` | `string[]` | `number[]`.   
   *(Value can contain a single entry or an array of entries.)*
 
 - **validator**: Entry validator function of form: `(value: any, field?: keyof T) => boolean`
 
 - **itemValidator**: Array item validator that will be used only in conjunction with array data type.
 
-- **notEmpty**: Defines that empty values, such as empty strings, should not be accepted as valid ones.
+- **notEmpty**: Defines that empty values, such as empty strings or arrays, or undefined should not be accepted as
+ valid ones.
 
 
 ## In memory data caching

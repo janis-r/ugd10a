@@ -16,6 +16,7 @@ export function findObjectKeyForValue(object: Record<string, any>, value: any): 
 
 /**
  * Generic Enum object type guard
+ * @template T TypeScript enum instance to check value against
  * @param {T} object
  * @param value
  * @returns {value is T}
@@ -26,8 +27,9 @@ export function valueBelongsToEnum<T extends Object>(object: T, value: any): val
 
 /**
  * Clean object by removing all keys that has got a null value, recursively
+ * @template T Object to be checked type.
  * @param {{}} object
- * @returns {{}} Object passed in as argument with null values deleted
+ * @returns {{}} Object passed in as argument with keys containing null values removed.
  */
 export function removeObjectNullValues<T extends Object>(object: T): T {
     for (const i in object) {
@@ -47,6 +49,7 @@ export function removeObjectNullValues<T extends Object>(object: T): T {
 
 /**
  * Extract only unique, non duplicating values from set
+ * @template T Object to be checked type.
  * @param {T[]} values
  * @returns {T[]}
  */
