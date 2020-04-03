@@ -1,6 +1,6 @@
 {
   "name": "ugd10a",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Collection of time, object and data utilities",
   "main": "index.js",
   "jsnext:main": ".esnext/index.js",
