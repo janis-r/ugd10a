@@ -13,8 +13,9 @@ export type FieldConfiguration<T extends Record<string | number, any> = any> = {
     exactValue?: any,
     // Type of data or list of types
     type?: ValueType | ValueType[],
-    // Value validator function
-    validator?: (value: any, field?: keyof T) => boolean,
+    // Value validator function - boolean returned indicate simple (pass/not pass) value while string returned
+    // will be taken as failure with reason to be inserted into error message
+    validator?: (value: any, field?: keyof T) => boolean | string,
     // Array item validator that will be used only in conjunction with array data type
     itemValidator?: (value: any) => boolean,
     // Defines that empty values, such as empty strings, should not be accepted as valid ones

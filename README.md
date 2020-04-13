@@ -52,7 +52,7 @@ console.log(validator.lastError);
  `string` | `symbol` | `function` or any of custom, array types : `array` | `string[]` | `number[]`.   
   *(Value can contain a single entry or an array of entries.)*
 
-- **validator**: Entry validator function of form: `(value: any, field?: keyof T) => boolean`
+- **validator**: Entry validator function of form: `(value: any, field?: keyof T) => boolean | string` where `true` indicate that value is valid, `false` is simple denial of value, and string represent reasoned denial that will be included in error message.
 
 - **itemValidator**: Array item validator that will be used only in conjunction with array data type.
 

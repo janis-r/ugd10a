@@ -66,7 +66,7 @@ export class Validator<T extends Record<string | number, any>> {
      */
     private readonly validateType = (value: unknown): value is object => {
         if (value === null || typeof value !== "object") {
-            this._lastError = {error: `Value is not an object: ${value}`};
+            this._lastError = {error: `Value is not an object: ${stringify(value)}`};
             return false;
         }
         return true;
@@ -147,14 +147,20 @@ export class Validator<T extends Record<string | number, any>> {
             return result;
         }
 
-        if (validator && !validator(value)) {
-            this._lastError = {field, error: `Value (${value}) rejected by validator function.`};
-            return false;
+        if (validator) {
+            const validationResult = validator(value);
+            if (validationResult !== true) {
+                this._lastError = {
+                    field,
+                    error: `Value (${stringify(value)}) rejected by validator function${validationResult !== false ? ` - ${validationResult}` : ''}.`
+                };
+                return false;
+            }
         }
 
         if (arrayTypes.has(type as ValueType)) {
             if (!Array.isArray(value)) {
-                this._lastError = {field, error: `Array typed value (${value}) is not an array.`};
+                this._lastError = {field, error: `Array typed value (${stringify(value)}) is not an array.`};
                 return false;
             }
             if (notEmpty && !value.length) {
@@ -166,7 +172,7 @@ export class Validator<T extends Record<string | number, any>> {
                     if (!itemValidator(entry)) {
                         this._lastError = {
                             field,
-                            error: `Array entry: ${JSON.stringify(entry)} is not valid as declared by item validator.`
+                            error: `Array entry: ${stringify(entry)} is not valid as declared by item validator.`
                         };
                         return false;
                     }
@@ -177,14 +183,14 @@ export class Validator<T extends Record<string | number, any>> {
 
         if ("exactValue" in config) {
             if (value !== exactValue) {
-                const error = `Exact value mismatch. Expected: ${exactValue}, actual: ${value}`;
+                const error = `Exact value mismatch. Expected: ${stringify(exactValue)}, actual: ${stringify(value)}`;
                 this._lastError = {field, error};
                 return false;
             }
         }
 
         if (notEmpty && (value === undefined || (typeof value === "string" && !value.length))) {
-            this._lastError = {field, error: `String length mismatch - is empty. Value: ${value}`};
+            this._lastError = {field, error: `String length mismatch - is empty. Value: ${stringify(value)}`};
             return false;
         }
 
@@ -199,7 +205,7 @@ export class Validator<T extends Record<string | number, any>> {
         }
 
         if (typeof field !== "number" && typeof field !== "string") {
-            throw new Error(`Field type (${field}) mystery encountered - call the detective!`)
+            throw new Error(`Field type (${stringify(field)}) mystery encountered - call the detective!`)
         }
 
         if (isArrayOfStrings(type)) {
@@ -215,20 +221,23 @@ export class Validator<T extends Record<string | number, any>> {
 
         if (arrayTypes.has(type)) {
             if (!Array.isArray(value)) {
-                this._lastError = {field, error: `Type mismatch. Type (${value}) is expected to be an array.`};
+                this._lastError = {
+                    field,
+                    error: `Type mismatch. Type (${stringify(value)}) is expected to be an array.`
+                };
                 return false;
             }
             if (type === "string[]" && !isArrayOfStrings(value)) {
                 this._lastError = {
                     field,
-                    error: `Type mismatch. Type (${value}) is expected to be an array of strings.`
+                    error: `Type mismatch. Type (${stringify(value)}) is expected to be an array of strings.`
                 };
                 return false;
             }
             if (type === "number[]" && !isArrayOfNumbers(value)) {
                 this._lastError = {
                     field,
-                    error: `Type mismatch. Type (${value}) is expected to be an array of numbers.`
+                    error: `Type mismatch. Type (${stringify(value)}) is expected to be an array of numbers.`
                 };
                 return false;
             }
@@ -255,4 +264,21 @@ function normalizeConfig<T extends Record<string | number, any>>(configuration: 
     }
 
     return Object.keys(configuration).map(field => ({...configuration[field], field}));
+}
+
+/**
+ * Stringify value to be inserted into logged output so it's represented as string and is of limited length
+ * @param value Value to stringify
+ * @param maxLength Max length of output
+ */
+function stringify(value: any, maxLength = 100): string {
+    if (typeof value === "undefined") {
+        return "undefined";
+    }
+
+    const output = JSON.stringify(value);
+    if (output.length > 100) {
+        return output.substr(0, maxLength) + "[...]";
+    }
+    return output;
 }
