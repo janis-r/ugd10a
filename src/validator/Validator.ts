@@ -36,6 +36,11 @@ export class Validator<T extends Record<string | number, any>> {
     }
 
     /**
+     * Last validation error exposed as get function.
+     */
+    readonly getLastError = () => this._lastError;
+
+    /**
      * Check if object contents can be validated to match field configuration set up within this validator.
      * @param value
      */
