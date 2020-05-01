@@ -153,9 +153,9 @@ export class Validator<T extends Record<string | number, any>> {
         }
 
         if (validator) {
-            let validationResult;
+            let validationResult: boolean | string;
             if (validator instanceof Validator) {
-                validationResult = validator.validate(value) === true ? true : validator.lastError;
+                validationResult = validator.validate(value) === true ? true : JSON.stringify(validator.lastError);
             } else {
                 validationResult = validator(value);
             }
