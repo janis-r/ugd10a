@@ -105,5 +105,23 @@ describe("Object validation", () => {
         expect(subValidator.validate({a: 1, b: true, c: 1, d: 1})).toBe(false);
         expect(subValidator.validate({a: 1, b: true, c: 1, d: true})).toBe(true);
     });
+    it("Can use property validator", () => {
+        type A = {
+            a: number,
+            b: { a: number, b: boolean }
+        };
+        const validator = new Validator<A>({
+            a: {type: "number"},
+            b: {
+                type: "object",
+                validator: new Validator<A["b"]>({
+                    a: {type: "number"},
+                    b: {type: "boolean"},
+                })
+            }
+        });
+        expect(validator.validate({a: 1, b: 1})).toBe(false);
+        expect(validator.validate({a: 1, b: {a: 1, b: true}})).toBe(true);
+    });
 
 });

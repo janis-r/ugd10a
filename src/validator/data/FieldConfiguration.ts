@@ -1,4 +1,5 @@
 import {ValueType} from "./ValueType";
+import {Validator} from "../Validator";
 
 /**
  * Object field validation configuration entry
@@ -14,8 +15,9 @@ export type FieldConfiguration<T extends Record<string | number, any> = any> = {
     // Type of data or list of types
     type?: ValueType | ValueType[],
     // Value validator function - boolean returned indicate simple (pass/not pass) value while string returned
-    // will be taken as failure with reason to be inserted into error message
-    validator?: (value: any, field?: keyof T) => boolean | string,
+    // will be taken as failure with reason to be inserted into error message.
+    // Or separate instance of validator serving same purpose and same semantics.
+    validator?: ((value: any, field?: keyof T) => boolean | string) | Validator<any>,
     // Array item validator that will be used only in conjunction with array data type
     itemValidator?: (value: any) => boolean,
     // Defines that empty values, such as empty strings, should not be accepted as valid ones

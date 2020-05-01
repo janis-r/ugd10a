@@ -153,7 +153,13 @@ export class Validator<T extends Record<string | number, any>> {
         }
 
         if (validator) {
-            const validationResult = validator(value);
+            let validationResult;
+            if (validator instanceof Validator) {
+                validationResult = validator.validate(value) === true ? true : validator.lastError;
+            } else {
+                validationResult = validator(value);
+            }
+
             if (validationResult !== true) {
                 this._lastError = {
                     field,
