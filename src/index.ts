@@ -1,5 +1,6 @@
 export * from "./caching/Cached";
 export * from "./caching/CachedCollection";
+export * from "./callback/CallbackCollection";
 export * from "./collection/Collection";
 export * from "./object/object-utils";
 export * from "./queue/ExecutionQueue";

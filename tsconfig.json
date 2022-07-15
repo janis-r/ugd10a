@@ -19,7 +19,6 @@
      "noImplicitReturns": true
   },
   "exclude": [
-    "./src/**/*.spec.ts",
     "export-package.ts",
     "./build"
   ]

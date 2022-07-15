@@ -20,7 +20,6 @@
      "moduleResolution": "node"
   },
   "exclude": [
-    "./src/**/*.spec.ts",
     "export-package.ts",
     "./build"
   ]
